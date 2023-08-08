@@ -10,6 +10,13 @@ class EditClassForm extends Component
 {
     public MyClass $myClass;
 
+    public $classGroups;
+
+    public function mount(MyClassService $myClassService)
+    {
+        $this->classGroups = $myClassService->getAllClassGroups();
+    }
+
     public function render()
     {
         return view('livewire.edit-class-form');

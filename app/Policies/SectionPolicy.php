@@ -25,7 +25,7 @@ class SectionPolicy
      */
     public function view(User $user, Section $section)
     {
-        if ($user->can('read section')) {
+        if ($user->can('read section') && $section->myClass->classGroup->school->id == $user->school->id) {
             return true;
         }
     }
@@ -45,7 +45,7 @@ class SectionPolicy
      */
     public function update(User $user, Section $section)
     {
-        if ($user->can('update section') ) {
+        if ($user->can('update section') && $user->school_id == $section->myClass->classGroup->school->id) {
             return true;
         }
     }
@@ -55,7 +55,7 @@ class SectionPolicy
      */
     public function delete(User $user, Section $section)
     {
-        if ($user->can('delete section') ) {
+        if ($user->can('delete section') && $user->school_id == $section->myClass->classGroup->school_id) {
             return true;
         }
     }

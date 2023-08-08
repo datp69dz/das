@@ -18,4 +18,9 @@
             </div>
         @endif
 
+        @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
+            @livewire('profile.two-factor-authentication-form')
+        @endif
+
+        @livewire('profile.logout-other-browser-sessions-form')
 @endsection

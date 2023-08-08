@@ -9,7 +9,10 @@ class CreateClassForm extends Component
 {
     public $classGroups;
 
-
+    public function mount(MyClassService $myClassService)
+    {
+        $this->classGroups = $myClassService->getAllClassGroups();
+    }
 
     public function render()
     {
