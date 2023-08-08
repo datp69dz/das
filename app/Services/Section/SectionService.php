@@ -4,7 +4,6 @@ namespace App\Services\Section;
 
 use App\Exceptions\ResourceNotEmptyException;
 use App\Models\Section;
-use App\Models\MyClass;
 use App\Services\School\SchoolService;
 
 class SectionService
@@ -26,7 +25,7 @@ class SectionService
      */
     public function getAllSections()
     {
-        $myClasses = MyClass::all();
+        $myClasses = $this->school->getSchoolById(auth()->user()->school_id)->myClasses->load('sections')->all();
         $sections = collect();
         foreach ($myClasses as $myClass) {
             $sections = $sections->merge($myClass->sections->all());

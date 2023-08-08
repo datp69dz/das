@@ -25,11 +25,10 @@ class MyClassPolicy
      */
     public function view(User $user, MyClass $myClass)
     {
-        if ($user->can('read class')) {
+        if ($user->can('read class') && $myClass->classGroup->school_id == $user->school_id) {
             return true;
         }
     }
-
 
     /**
      * Determine whether the user can create models.
@@ -46,7 +45,7 @@ class MyClassPolicy
      */
     public function update(User $user, MyClass $myClass)
     {
-        if ($user->can('update class')) {
+        if ($user->can('update class') && $user->school_id == $myClass->classGroup->school_id) {
             return true;
         }
     }
@@ -54,10 +53,9 @@ class MyClassPolicy
     /**
      * Determine whether the user can delete the model.
      */
-
     public function delete(User $user, MyClass $myClass)
     {
-        if ($user->can('delete class')) {
+        if ($user->can('delete class') && $user->school_id == $myClass->classGroup->school_id) {
             return true;
         }
     }

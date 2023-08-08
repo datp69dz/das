@@ -14,7 +14,7 @@ class MyClassUpdateRequest extends FormRequest
      */
     public function rules()
     {
-
+        $classGroupId = $this->get('class_group_id');
         $myClassId = $this->route()->parameter('class')->id;
 
         return [
@@ -22,8 +22,9 @@ class MyClassUpdateRequest extends FormRequest
                 'required',
                 'max:255',
                 //figure it out before changing
-                Rule::unique('my_classes', 'name')->ignore($myClassId)->where(fn ($query) => $query)
+                Rule::unique('my_classes', 'name')->ignore($myClassId)->where(fn ($query) => $query->where('class_group_id', $classGroupId)),
             ],
+            'class_group_id' => 'required|exists:class_groups,id',
         ];
     }
 }

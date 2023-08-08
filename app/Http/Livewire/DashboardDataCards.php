@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use App\Models\School;
 use App\Models\User;
-use App\Models\MyClass;
 use App\Services\Section\SectionService;
 use Livewire\Component;
 
@@ -27,7 +26,8 @@ class DashboardDataCards extends Component
     public function mount(SectionService $sectionService)
     {
         $this->schools = School::count();
-        $this->classes = MyClass::all()->count();
+        $this->classGroups = auth()->user()->school->classGroups()->count();
+        $this->classes = auth()->user()->school->myClasses()->count();
         $this->sections = $sectionService->getAllSections()->count();
         $this->students = User::inSchool()->students()->activeStudents()->count();
         $this->teachers = User::inSchool()->role('teacher')->count();

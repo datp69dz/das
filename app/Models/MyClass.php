@@ -14,12 +14,11 @@ class MyClass extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['name'];
-
+    protected $fillable = ['name', 'class_group_id'];
 
     public function school()
     {
-        return $this->belongsTo(School::class);
+        $this->hasOneThrough(School::class, ClassGroup::class);
     }
 
     /**

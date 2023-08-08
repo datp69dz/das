@@ -15,11 +15,20 @@ class MyClassStoreRequest extends FormRequest
      */
     public function rules()
     {
+        $classGroupId = $this->input('class_group_id');
+
         return [
             'name' => [
                 'required',
                 'max:255',
-                Rule::unique('class_groups')->where(fn ($query) => $query->where('school_id', $this->input('school_id') ?? auth()->user()->school_id)),
+                //checks if there is a class with a name in class group
+                Rule::unique('my_classes', 'name')->where(fn ($query) => $query->where('class_group_id', $classGroupId)),
+            ],
+            'class_group_id' => [
+                'required',
+                Rule::exists('class_groups', 'id')->where(function (Builder $query) {
+                    return $query->where('school_id', auth()->user()->school->id);
+                }),
             ],
         ];
     }
